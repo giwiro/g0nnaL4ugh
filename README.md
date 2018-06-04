@@ -15,12 +15,35 @@
 
 ## FAQ
 
+* How are the setters and getters in C# ?
+
+They're like normal g&s but you can automate this, using `Automatic properties` to avoid boilerplate code:
+
+```
+private string name;
+
+public string Name
+{
+    get { return name; }
+    set { name = value; }
+}
+```
+[Resource](http://csharp.net-tutorials.com/csharp-3.0/automatic-properties/)
+
+
 * Why Rijndael instead of AES, if AES is the standard ?
 
 * Which block cipher mode should I use ?
 
-* Should I use the same IV for all files ?
+* How should I generate random strings ?
 
+    We can use `Random()` but the problem is that the default seed use `Environment.TickCount` ([https://referencesource.microsoft.com/#mscorlib/system/random.cs](https://referencesource.microsoft.com/#mscorlib/system/random.cs)) and it can be predictable as it's said in this article: [https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html](https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html).
+
+    ((Github issue)[https://github.com/BlackMathIT/Ransomware/issues/2])
+
+* How should I generate the IV's and should it be the same for all files ?
+
+    ([Stackoverflow](https://stackoverflow.com/a/2790721))
 
 ## Monodevelop errors (v7.5)
 
@@ -37,14 +60,13 @@ You can do 3 things (all together or maybe one):
 You need to do two things:
 
 * Unset some global variable called `GNOME_DESKTOP_SESSION_ID` ([Stackoverflow](https://stackoverflow.com/a/23233374)):
-	```
-	unset GNOME_DESKTOP_SESSION_ID
-	```
-	Then run `monodevelop`
-	In order to persist this solution, we should modify the startup bash for `monodevelop`, We can find it by running `which monodevelop`.
-	Then append the `unset` statement just under the `shebang`.
-	
-	
+```
+unset GNOME_DESKTOP_SESSION_ID
+```
+Then run `monodevelop`
+In order to persist this solution, we should modify the startup bash for `monodevelop`, We can find it by running `which monodevelop`.
+Then append the `unset` statement just under the `shebang`.
+
 * Install `xterm`.
 	* If you are in fedora:
 		```
@@ -55,3 +77,7 @@ You need to do two things:
 		sudo apt-get install xterm
 		```
 
+
+## Bypass Window security
+
+We can sign the executable with some fake credentials using this tool: ((https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh)[https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh]).

@@ -34,6 +34,14 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Finder\Spider.cs" />
+    <Compile Include="Crypto\Encrypter.cs" />
+    <Compile Include="Crypto\Decrypter.cs" />
+    <Compile Include="Finder\Node.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Finder\" />
+    <Folder Include="Crypto\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
