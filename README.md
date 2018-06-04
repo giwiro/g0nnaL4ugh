@@ -19,7 +19,7 @@
 
 They're like normal g&s but you can automate this, using `Automatic properties` to avoid boilerplate code:
 
-```
+```c#
 private string name;
 
 public string Name
