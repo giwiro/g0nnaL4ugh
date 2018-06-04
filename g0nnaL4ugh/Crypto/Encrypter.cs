@@ -41,30 +41,30 @@ namespace g0nnaL4ugh.Crypto
 			byte[] encryptedBytes = null;
 			using (MemoryStream ms = new MemoryStream())
 			{
-				using (RijndaelManaged RJM = new RijndaelManaged())
-				{
-					/*
-					 * Setting up the encryption block size (CBC size) and 
-					 * key size (derivate key from password and salt with # iterations)
+                using (RijndaelManaged RJM = new RijndaelManaged())
+                {
+                    /*
+                    * Setting up the encryption block size (CBC size) and 
+                    * key size (derivate key from password and salt with # iterations)
                     */
-					RJM.KeySize = 256;
-					RJM.BlockSize = 192;
-					var key = new Rfc2898DeriveBytes(password, salt, 1500);
-					RJM.Key = key.GetBytes(RJM.KeySize / 8);
-					RJM.IV = key.GetBytes(RJM.BlockSize / 8);
+                    RJM.KeySize = 256;
+                    RJM.BlockSize = 192;
+                    var key = new Rfc2898DeriveBytes(password, salt, 1500);
+                    RJM.Key = key.GetBytes(RJM.KeySize / 8);
+                    RJM.IV = key.GetBytes(RJM.BlockSize / 8);
                     /* Set CBC mode, it's the most secure for AES alike */
-					RJM.Mode = CipherMode.CBC;
+                    RJM.Mode = CipherMode.CBC;
                     /* Finally encript bytes */
-					using (var cs = new CryptoStream(ms, RJM.CreateEncryptor(), CryptoStreamMode.Write))
+                    using (var cs = new CryptoStream(ms, RJM.CreateEncryptor(), CryptoStreamMode.Write))
                     {
-						cs.Write(bytes2Encrypt, 0, bytes2Encrypt.Length);
+                        cs.Write(bytes2Encrypt, 0, bytes2Encrypt.Length);
                         cs.Close();
                     }
-					/* TODO: We need to append the salt to the encrypted bytes */
+                    /* TODO: We need to append the salt to the encrypted bytes */
                     encryptedBytes = ms.ToArray();
-				}
-			}
-			return encryptedBytes;
-		}
-	}
+                }
+            }
+            return encryptedBytes;
+        }
+    }
 }
