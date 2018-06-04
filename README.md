@@ -39,7 +39,7 @@
 
     We can use `Random()` but the problem is that the default seed use `Environment.TickCount` ([https://referencesource.microsoft.com/#mscorlib/system/random.cs](https://referencesource.microsoft.com/#mscorlib/system/random.cs)) and it can be predictable as it's said in this article: [https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html](https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html).
 
-    ((Github issue)[https://github.com/BlackMathIT/Ransomware/issues/2])
+    ([Github issue](https://github.com/BlackMathIT/Ransomware/issues/2))
 
 * **How should I generate the IV's and should it be the same for all files ?**
 
