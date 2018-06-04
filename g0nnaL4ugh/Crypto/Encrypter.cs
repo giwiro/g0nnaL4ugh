@@ -29,7 +29,7 @@ namespace g0nnaL4ugh.Crypto
             return Convert.ToBase64String(randomBytes);
 		}
 
-        public static string GenerateRandomSalt(int length)
+        public string GenerateRandomSalt(int length)
 		{
 			byte[] randomBytes = Encrypter.GenerateTrulyRandom(length);
             return Convert.ToBase64String(randomBytes);
