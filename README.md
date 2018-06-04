@@ -15,33 +15,33 @@
 
 ## FAQ
 
-* How are the setters and getters in C# ?
+* **How are the setters and getters in C# ?**
 
-They're like normal g&s but you can automate this, using `Automatic properties` to avoid boilerplate code:
+	They're like normal g&s but you can automate this, using `Automatic properties` to avoid boilerplate code:
 
-```c#
-private string name;
+	```c#
+	private string name;
 
-public string Name
-{
-    get { return name; }
-    set { name = value; }
-}
-```
-[Resource](http://csharp.net-tutorials.com/csharp-3.0/automatic-properties/)
+	public string Name
+	{
+	    get { return name; }
+	    set { name = value; }
+	}
+	```
+	[Resource](http://csharp.net-tutorials.com/csharp-3.0/automatic-properties/)
 
 
-* Why Rijndael instead of AES, if AES is the standard ?
+* **Why Rijndael instead of AES, if AES is the standard ?**
 
-* Which block cipher mode should I use ?
+* **Which block cipher mode should I use ?**
 
-* How should I generate random strings ?
+* **How should I generate random strings ?**
 
     We can use `Random()` but the problem is that the default seed use `Environment.TickCount` ([https://referencesource.microsoft.com/#mscorlib/system/random.cs](https://referencesource.microsoft.com/#mscorlib/system/random.cs)) and it can be predictable as it's said in this article: [https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html](https://utkusen.com/blog/destroying-the-encryption-of-hidden-tear-ransomware.html).
 
     ((Github issue)[https://github.com/BlackMathIT/Ransomware/issues/2])
 
-* How should I generate the IV's and should it be the same for all files ?
+* **How should I generate the IV's and should it be the same for all files ?**
 
     ([Stackoverflow](https://stackoverflow.com/a/2790721))
 
