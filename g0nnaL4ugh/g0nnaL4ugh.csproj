@@ -38,10 +38,12 @@
     <Compile Include="Crypto\Encrypter.cs" />
     <Compile Include="Crypto\Decrypter.cs" />
     <Compile Include="Finder\Node.cs" />
+    <Compile Include="Snitch\Sender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Finder\" />
     <Folder Include="Crypto\" />
+    <Folder Include="Snitch\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
