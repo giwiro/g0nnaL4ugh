@@ -39,6 +39,7 @@
     <Compile Include="Crypto\Decrypter.cs" />
     <Compile Include="Finder\Node.cs" />
     <Compile Include="Snitch\Sender.cs" />
+    <Compile Include="Crypto\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Finder\" />

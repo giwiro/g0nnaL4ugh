@@ -14,4 +14,13 @@ Global
 		{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}.Release|x86.ActiveCfg = Release|x86
 		{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 80
+		$1.TabsToSpaces = True
+		$1.NoTabsAfterNonTabs = True
+		$1.EolMarker = Unix
+		$1.scope = text/plain
+	EndGlobalSection
 EndGlobal

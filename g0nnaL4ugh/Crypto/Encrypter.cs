@@ -21,19 +21,19 @@ namespace g0nnaL4ugh.Crypto
 			return randomBytes;
 		}
 
-		public string GenerateRandomPrivateKey()
+		public byte[] GenerateRandomPrivateKey()
 		{
 			// The length will be random between 23 and 28
 			Random random = new Random();
 			int length = random.Next(23, 28);
 			byte[] randomBytes = Encrypter.GenerateTrulyRandom(length);
-			return Convert.ToBase64String(randomBytes);
+			return randomBytes;
 		}
 
-		public string GenerateRandomSalt(int length)
+		public byte[] GenerateRandomSalt()
 		{
-			byte[] randomBytes = Encrypter.GenerateTrulyRandom(length);
-			return Convert.ToBase64String(randomBytes);
+			byte[] randomBytes = Encrypter.GenerateTrulyRandom(32);
+			return randomBytes;
 		}
 
 		public byte[] EncryptBytes(byte[] bytes2Encrypt, byte[] password, byte[] salt)
