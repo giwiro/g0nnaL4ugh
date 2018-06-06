@@ -6,11 +6,7 @@ namespace g0nnaL4ugh.Crypto
 {
 	public class Encrypter
 	{
-		public Encrypter()
-		{
-		}
-
-		private static byte[] GenerateTrulyRandom(int length)
+        private static byte[] GenerateTrulyRandom(int length)
 		{
 			byte[] randomBytes = new byte[length];
 			using (var randito = new RNGCryptoServiceProvider())
@@ -32,13 +28,14 @@ namespace g0nnaL4ugh.Crypto
 
 		public byte[] GenerateRandomSalt()
 		{
-			byte[] randomBytes = Encrypter.GenerateTrulyRandom(32);
+			byte[] randomBytes = Encrypter.GenerateTrulyRandom(Utilities.SaltSizeBytes);
 			return randomBytes;
 		}
 
 		public byte[] EncryptBytes(byte[] bytes2Encrypt, byte[] password, byte[] salt)
 		{
 			byte[] encryptedBytes = null;
+			byte[] saltedEncryptedBytes = null;
 			using (MemoryStream ms = new MemoryStream())
 			{
                 using (RijndaelManaged RJM = new RijndaelManaged())
@@ -47,8 +44,8 @@ namespace g0nnaL4ugh.Crypto
                     * Setting up the encryption block size (CBC size) and 
                     * key size (derivate key from password and salt with # iterations)
                     */
-                    RJM.KeySize = 256;
-                    RJM.BlockSize = 192;
+					RJM.KeySize = Utilities.BlockSizeBits;
+					RJM.BlockSize = Utilities.BlockSizeBits;
                     var key = new Rfc2898DeriveBytes(password, salt, 1500);
                     RJM.Key = key.GetBytes(RJM.KeySize / 8);
                     RJM.IV = key.GetBytes(RJM.BlockSize / 8);
@@ -62,9 +59,10 @@ namespace g0nnaL4ugh.Crypto
                     }
                     /* TODO: We need to append the salt to the encrypted bytes */
                     encryptedBytes = ms.ToArray();
+                    saltedEncryptedBytes = Utilities.ConcatBytes(salt, encryptedBytes);
                 }
             }
-            return encryptedBytes;
+			return saltedEncryptedBytes;
         }
     }
 }
