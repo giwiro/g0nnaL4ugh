@@ -20,6 +20,12 @@ namespace g0nnaL4ugh.Crypto
 			return Convert.ToBase64String(bytes);
 		}
 
+        public static byte[] TakeFirstBytes(byte[] a, int length)
+        {
+			IEnumerable<byte> firstXBytes = a.Take(length);
+			return firstXBytes.ToArray();
+		}
+
         public static byte[] ConcatBytes(byte[] a, byte[] b)
 		{
 			/* The waes to concat 2 or more byte arrays are:
