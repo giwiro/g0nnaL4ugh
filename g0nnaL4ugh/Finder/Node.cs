@@ -15,7 +15,7 @@ namespace g0nnaL4ugh.Finder
             this.fullPath = fullPath;
         }
 
-		public Node(NodeType type, string fullPath, byte[] salt)
+        public Node(NodeType type, string fullPath, byte[] salt)
         {
             this.type = type;
             this.fullPath = fullPath;
@@ -24,6 +24,6 @@ namespace g0nnaL4ugh.Finder
 
         public NodeType Type { get { return this.type; } }
         public string FullPath { get { return this.fullPath; } }
-		public byte[] Salt { get { return this.salt; } set { this.salt = value; } }
+        public byte[] Salt { get { return this.salt; } set { this.salt = value; } }
     }
 }

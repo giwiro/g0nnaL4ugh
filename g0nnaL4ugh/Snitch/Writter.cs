@@ -5,13 +5,10 @@ namespace g0nnaL4ugh.Snitch
 {
     public class Writter
     {
-        public Writter()
-        {
-        }
 
         public static void WriteBytes2File(byte[] data, string filePath)
-		{
-			File.WriteAllBytes(filePath, data);
-		}
+        {
+            File.WriteAllBytes(filePath, data);
+        }
     }
 }

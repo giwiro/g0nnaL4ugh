@@ -5,17 +5,18 @@ using System.Security.Cryptography;
 namespace g0nnaL4ugh.Crypto
 {
     public class Decrypter
-    {
-        public Decrypter()
+    {      
+        public byte[] ExtractSalt(byte[] cipherText)
         {
+            return Utilities.TakeFirstsBytes(cipherText, Utilities.SaltSizeBytes);
         }
 
-        public byte[] ExtractSalt(byte[] cipherText)
-		{
-			return Utilities.TakeFirstBytes(cipherText, Utilities.SaltSizeBytes);
-		}
+        public byte[] ExtractBytes2Dec(byte[] cipherText)
+        {
+            return Utilities.TakeFromBytes(cipherText, Utilities.SaltSizeBytes);
+        }
 
-		public byte[] DecryptBytes(byte[] cipherText, byte[] password, byte[] salt)
+        public byte[] DecryptBytes(byte[] cipherText, byte[] password, byte[] salt)
         {
             byte[] plainText = null;
             using (MemoryStream ms = new MemoryStream())
@@ -34,16 +35,16 @@ namespace g0nnaL4ugh.Crypto
                     /* Set CBC mode, it's the most secure for AES alike */
                     RJM.Mode = CipherMode.CBC;
                     /* Finally encript bytes */
-					using (var cs = new CryptoStream(ms, RJM.CreateDecryptor(), CryptoStreamMode.Write))
+                    using (var cs = new CryptoStream(ms, RJM.CreateDecryptor(), CryptoStreamMode.Write))
                     {
-						cs.Write(cipherText, 0, cipherText.Length);
+                        cs.Write(cipherText, 0, cipherText.Length);
                         cs.Close();
                     }
                     /* TODO: We need to append the salt to the encrypted bytes */
-					plainText = ms.ToArray();
+                    plainText = ms.ToArray();
                 }
             }
-			return plainText;
+            return plainText;
         }
     }
 }
