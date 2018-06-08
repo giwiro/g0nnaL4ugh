@@ -54,5 +54,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\g0nnaL4ugh.csproj">
+      <Project>{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}</Project>
+      <Name>g0nnaL4ugh</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

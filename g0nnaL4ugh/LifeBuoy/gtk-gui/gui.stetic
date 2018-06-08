@@ -70,6 +70,16 @@
             <property name="Y">223</property>
           </packing>
         </child>
+        <child>
+          <widget class="Gtk.Label" id="wrong">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">(Base64 wrong format!)</property>
+          </widget>
+          <packing>
+            <property name="X">255</property>
+            <property name="Y">232</property>
+          </packing>
+        </child>
       </widget>
     </child>
   </widget>

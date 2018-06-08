@@ -13,6 +13,8 @@ public partial class MainWindow
 
 	private global::Gtk.ProgressBar progressbar1;
 
+	private global::Gtk.Label wrong;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
@@ -70,6 +72,14 @@ public partial class MainWindow
 		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.progressbar1]));
 		w5.X = 10;
 		w5.Y = 223;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.wrong = new global::Gtk.Label();
+		this.wrong.Name = "wrong";
+		this.wrong.LabelProp = global::Mono.Unix.Catalog.GetString("(Base64 wrong format!)");
+		this.fixed1.Add(this.wrong);
+		global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.wrong]));
+		w6.X = 255;
+		w6.Y = 232;
 		this.Add(this.fixed1);
 		if ((this.Child != null))
 		{
