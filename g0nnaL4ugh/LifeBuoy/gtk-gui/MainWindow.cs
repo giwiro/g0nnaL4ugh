@@ -20,7 +20,7 @@ public partial class MainWindow
 		this.WidthRequest = 500;
 		this.HeightRequest = 300;
 		this.Name = "MainWindow";
-		this.Title = global::Mono.Unix.Catalog.GetString("Rescue (  •̀ᴗ•́)و ̑̑");
+		this.Title = global::Mono.Unix.Catalog.GetString("Rescue   ( •̀ᴗ•́)و ̑̑");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 		this.Resizable = false;
 		this.AllowGrow = false;

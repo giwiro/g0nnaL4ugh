@@ -3,6 +3,8 @@ using Gtk;
 
 public partial class MainWindow : Gtk.Window
 {
+	private bool isProcessing = false;
+
     public MainWindow() : base(Gtk.WindowType.Toplevel)
     {
         Build();
@@ -11,7 +13,10 @@ public partial class MainWindow : Gtk.Window
     
     protected void OnDeleteEvent(object sender, DeleteEventArgs a)
     {
-        Application.Quit();
+		if (!this.isProcessing)
+		{
+			Application.Quit();
+		}      
         a.RetVal = true;
     }
 
@@ -23,6 +28,7 @@ public partial class MainWindow : Gtk.Window
             entry2.Sensitive = false;
 			progressbar1.Visible = true;
 			this.BeginProgressAnimation();
+			this.isProcessing = true;
 		}
 	}
 

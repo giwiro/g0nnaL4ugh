@@ -10,7 +10,7 @@
     <property name="MemberName" />
     <property name="WidthRequest">500</property>
     <property name="HeightRequest">300</property>
-    <property name="Title" translatable="yes">Rescue (  •̀ᴗ•́)و ̑̑</property>
+    <property name="Title" translatable="yes">Rescue   ( •̀ᴗ•́)و ̑̑</property>
     <property name="WindowPosition">CenterOnParent</property>
     <property name="Resizable">False</property>
     <property name="AllowGrow">False</property>
