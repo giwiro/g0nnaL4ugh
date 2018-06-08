@@ -12,6 +12,33 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/oooo-kill-em.svg)](https://forthebadge.com)
 
+## Folder structure
+
+This program has 2 projects within it. The first one is called `g0nnaL4ugh` 
+and it has all the core functionalities as Crypto, Crawling directories,
+Snitching the generated password, etc; and it will be a console-only program 
+that performs the encryption. On the other hand, `LifeBuoy` is GUI-only project
+that will receive the password as input and perform the decryption using the
+modules in the main project.
+
+> To open the project you should load the first `g0nnaL4augh.sln`
+
+    /g0nnaL4augh
+    ├── g0nnaL4augh.sln             # Solution file you should open
+    ├── README.md
+    ├── /images                     # Images used in README.md
+    └── /g0nnaL4augh                # Source code of main project
+        ├── Program.cs              # Console encryption application main entry point
+        ├── /Crypto                 # Crypto operations (Encrypt & Decrypt)
+        ├── /Finder                 # Crawl in directories and apply encrypt or decrypt
+        ├── /Properties             # IDE generated
+        ├── /Snitch                 # Password snitch (send random generated password through mail or async encrypt it)
+        └── /LifeBuoy               # Decryption GUI project (using main project modules [Crypto, Finder])
+            ├── /gtk-gui            # IDE generated gui components and properties
+            ├── /Properties         # IDE generated
+            ├── MainWindow.cs       # Gtk Window logic (use of g0nnaL4ugh modules)
+            └── Program.cs          # Decryption application main entry point (Initialize Gtk window)
+
 
 ## FAQ
 

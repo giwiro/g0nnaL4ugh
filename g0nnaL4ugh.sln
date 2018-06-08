@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "g0nnaL4ugh", "g0nnaL4ugh\g0nnaL4ugh.csproj", "{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeBuoy", "g0nnaL4ugh\LifeBuoy\LifeBuoy.csproj", "{EB49C234-D3D6-42C0-BBCF-3B1A9B08CF0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}.Debug|x86.Build.0 = Debug|x86
 		{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}.Release|x86.ActiveCfg = Release|x86
 		{50E253C6-7B80-4D8E-A7BC-F98F0F248F05}.Release|x86.Build.0 = Release|x86
+		{EB49C234-D3D6-42C0-BBCF-3B1A9B08CF0C}.Debug|x86.ActiveCfg = Debug|x86
+		{EB49C234-D3D6-42C0-BBCF-3B1A9B08CF0C}.Debug|x86.Build.0 = Debug|x86
+		{EB49C234-D3D6-42C0-BBCF-3B1A9B08CF0C}.Release|x86.ActiveCfg = Release|x86
+		{EB49C234-D3D6-42C0-BBCF-3B1A9B08CF0C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 EndGlobal
