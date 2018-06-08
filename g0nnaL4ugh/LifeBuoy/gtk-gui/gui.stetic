@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+  </configuration>
+  <import>
+    <widget-library name="../bin/Debug/LifeBuoy.exe" internal="true" />
+  </import>
+  <widget class="Gtk.Window" id="MainWindow" design-size="500 300">
+    <property name="MemberName" />
+    <property name="WidthRequest">500</property>
+    <property name="HeightRequest">300</property>
+    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="Resizable">False</property>
+    <property name="AllowGrow">False</property>
+    <property name="Gravity">Static</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.Fixed" id="fixed1">
+        <property name="MemberName" />
+        <property name="HasWindow">False</property>
+        <child>
+          <widget class="Gtk.Button" id="rescue">
+            <property name="MemberName">rescue</property>
+            <property name="WidthRequest">80</property>
+            <property name="CanFocus">True</property>
+            <property name="ExtensionEvents">All</property>
+            <property name="Type">TextOnly</property>
+            <property name="Label" translatable="yes">Rescue</property>
+            <property name="UseUnderline">True</property>
+            <signal name="Clicked" handler="OnRescueBtnClicked" />
+          </widget>
+          <packing>
+            <property name="X">410</property>
+            <property name="Y">256</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Entry" id="entry2">
+            <property name="MemberName" />
+            <property name="WidthRequest">400</property>
+            <property name="Tooltip" translatable="yes">Paste the password in base64 format</property>
+            <property name="CanFocus">True</property>
+            <property name="IsEditable">True</property>
+            <property name="InvisibleChar">●</property>
+          </widget>
+          <packing>
+            <property name="X">10</property>
+            <property name="Y">256</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Label" id="label2">
+            <property name="MemberName" />
+            <property name="LabelProp" translatable="yes">Paste the password in base64 format</property>
+          </widget>
+          <packing>
+            <property name="X">12</property>
+            <property name="Y">232</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.ProgressBar" id="progressbar1">
+            <property name="MemberName">10</property>
+            <property name="WidthRequest">480</property>
+          </widget>
+          <packing>
+            <property name="X">10</property>
+            <property name="Y">223</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>
