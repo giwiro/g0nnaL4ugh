@@ -39,3 +39,8 @@ Thumbs.db
 
 # dotCover
 *.dotCover
+
+# keys
+keys/ransom_public.key
+keys/ransom_private.key
+

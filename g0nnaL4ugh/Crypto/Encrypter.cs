@@ -6,6 +6,7 @@ namespace g0nnaL4ugh.Crypto
 {
     public class Encrypter
     {
+		public static readonly string publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxSH6JLTzicAdkxq3kJTOFdUsrKgOX/hjd/KiohKo93A+d6CwnCO3MnR3n7jA1HPDeZ1+LwNeT48AkZeHeavbN+QNOYKtV5hmd7Gq8f094KCDe2o4H0ka48/Y7KXpdUXX/KPGC7y+ULH8Vk199N7JzHbPuDDR9JITl4RGRjRO1tdV8K+eAG2kwsmc041j4XqWRbGlr/REcGi3ZASgNL+TyJ838wgeU8F+YdPRe3Wdoxd6A91Uxpy2K/b3ZWibs5BcgKoKqjsyMEq+iEM98ShQhoR/vOPykTA0Bxwa4YhhvgpvIxhciu4Rm0nDzPBE1Ck9EqYT4qJk/ipvqeycpaIEBwIDAQAB";
         private static byte[] GenerateTrulyRandom(int length)
         {
             byte[] randomBytes = new byte[length];
