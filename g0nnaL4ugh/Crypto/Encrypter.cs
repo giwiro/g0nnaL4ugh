@@ -6,7 +6,9 @@ namespace g0nnaL4ugh.Crypto
 {
     public class Encrypter
     {
+        // Harcoded Public key, don't forget to change it
 		public static readonly string publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxSH6JLTzicAdkxq3kJTOFdUsrKgOX/hjd/KiohKo93A+d6CwnCO3MnR3n7jA1HPDeZ1+LwNeT48AkZeHeavbN+QNOYKtV5hmd7Gq8f094KCDe2o4H0ka48/Y7KXpdUXX/KPGC7y+ULH8Vk199N7JzHbPuDDR9JITl4RGRjRO1tdV8K+eAG2kwsmc041j4XqWRbGlr/REcGi3ZASgNL+TyJ838wgeU8F+YdPRe3Wdoxd6A91Uxpy2K/b3ZWibs5BcgKoKqjsyMEq+iEM98ShQhoR/vOPykTA0Bxwa4YhhvgpvIxhciu4Rm0nDzPBE1Ck9EqYT4qJk/ipvqeycpaIEBwIDAQAB";
+      
         private static byte[] GenerateTrulyRandom(int length)
         {
             byte[] randomBytes = new byte[length];
@@ -65,5 +67,25 @@ namespace g0nnaL4ugh.Crypto
             }
             return saltedEncryptedBytes;
         }
+
+        public byte[] AsymEncryptBytes(byte[] bytes2Encrypt)
+		{
+			byte[] encryptedBytes = null;
+			using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())  
+            {
+				RSAParameters rsaParam = rsa.ExportParameters(false);
+				rsaParam.Modulus = Convert.FromBase64String(publicKey);
+				rsa.ImportParameters(rsaParam);
+				// Get the public key
+                // string publicKey2 = rsa.ToXmlString(false); // false to get the public key
+                // string privateKey = rsa.ToXmlString(true); // true to get the private key
+				Console.WriteLine(publicKey);
+				// Set the rsa pulic key
+				// rsa.FromXmlString(publicKey2);
+				// encryptedBytes = rsa.Encrypt(bytes2Encrypt, true);
+				encryptedBytes = rsa.Encrypt(bytes2Encrypt, false);
+            }
+			return encryptedBytes;
+		}
     }
 }

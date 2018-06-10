@@ -41,6 +41,7 @@
     <Compile Include="Snitch\Sender.cs" />
     <Compile Include="Crypto\Utilities.cs" />
     <Compile Include="Snitch\Writter.cs" />
+    <Compile Include="PathUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Finder\" />

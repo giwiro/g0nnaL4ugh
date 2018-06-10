@@ -9,7 +9,12 @@ namespace g0nnaL4ugh.Crypto
     {
         public const int SaltSizeBytes = 32;
         public const int BlockSizeBits = 256;
-
+      
+        public static byte[] ConvertUTF2Bytes(string str)
+        {
+            return Encoding.UTF8.GetBytes(str);
+        }
+      
         public static string ConvertBytes2UTF(byte[] bytes)
         {
             return Encoding.UTF8.GetString(bytes);
