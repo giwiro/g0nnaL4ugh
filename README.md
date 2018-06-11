@@ -16,7 +16,7 @@
 
 ## What's inside ?
 
-This project gas 2 projects within it:
+This project has 2 projects within it:
 
 1. `g0nnaL4ugh`: The first one has all the core functionalities as Crypto, Crawling directories,
 Snitching the generated password, etc; and it will be a console-only program 
@@ -24,7 +24,7 @@ that performs the encryption.
 
 2. `LifeBuoy`: On the other hand, this is GUI-only project
 that will receive the password (in Base64) as input and perform the decryption using the
-modules in the main project.
+modules of the main project.
 
 ![Cannot Run](images/LifeBuoy.png?raw=true)
 
