@@ -15,12 +15,14 @@ public partial class MainWindow
 
 	private global::Gtk.Label wrong;
 
+	private global::Gtk.Image image2;
+
 	protected virtual void Build()
 	{
 		global::Stetic.Gui.Initialize(this);
 		// Widget MainWindow
 		this.WidthRequest = 500;
-		this.HeightRequest = 300;
+		this.HeightRequest = 325;
 		this.Name = "MainWindow";
 		this.Title = global::Mono.Unix.Catalog.GetString("Rescue   ( •̀ᴗ•́)و ̑̑");
 		this.WindowPosition = ((global::Gtk.WindowPosition)(4));
@@ -43,7 +45,7 @@ public partial class MainWindow
 		this.fixed1.Add(this.rescue);
 		global::Gtk.Fixed.FixedChild w1 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.rescue]));
 		w1.X = 410;
-		w1.Y = 256;
+		w1.Y = 281;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.entry2 = new global::Gtk.Entry();
 		global::Gtk.Tooltips w2 = new Gtk.Tooltips();
@@ -57,7 +59,7 @@ public partial class MainWindow
 		this.fixed1.Add(this.entry2);
 		global::Gtk.Fixed.FixedChild w3 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.entry2]));
 		w3.X = 10;
-		w3.Y = 256;
+		w3.Y = 281;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.label2 = new global::Gtk.Label();
 		this.label2.Name = "label2";
@@ -65,7 +67,7 @@ public partial class MainWindow
 		this.fixed1.Add(this.label2);
 		global::Gtk.Fixed.FixedChild w4 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.label2]));
 		w4.X = 12;
-		w4.Y = 232;
+		w4.Y = 257;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.progressbar1 = new global::Gtk.ProgressBar();
 		this.progressbar1.WidthRequest = 480;
@@ -74,7 +76,7 @@ public partial class MainWindow
 		this.fixed1.Add(this.progressbar1);
 		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.progressbar1]));
 		w5.X = 10;
-		w5.Y = 212;
+		w5.Y = 238;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.wrong = new global::Gtk.Label();
 		this.wrong.Name = "wrong";
@@ -82,14 +84,19 @@ public partial class MainWindow
 		this.fixed1.Add(this.wrong);
 		global::Gtk.Fixed.FixedChild w6 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.wrong]));
 		w6.X = 255;
-		w6.Y = 232;
+		w6.Y = 257;
+		// Container child fixed1.Gtk.Fixed+FixedChild
+		this.image2 = new global::Gtk.Image();
+		this.image2.Name = "image2";
+		this.image2.Pixbuf = global::Gdk.Pixbuf.LoadFromResource("LifeBuoy.top.png");
+		this.fixed1.Add(this.image2);
 		this.Add(this.fixed1);
 		if ((this.Child != null))
 		{
 			this.Child.ShowAll();
 		}
 		this.DefaultWidth = 500;
-		this.DefaultHeight = 300;
+		this.DefaultHeight = 325;
 		this.Show();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 		this.rescue.Clicked += new global::System.EventHandler(this.OnRescueBtnClicked);
