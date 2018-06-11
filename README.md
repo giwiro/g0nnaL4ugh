@@ -14,14 +14,20 @@
 
 [![forthebadge](https://forthebadge.com/images/badges/oooo-kill-em.svg)](https://forthebadge.com)
 
-## Folder structure
+## What's inside ?
 
-This program has 2 projects within it. The first one is called `g0nnaL4ugh` 
-and it has all the core functionalities as Crypto, Crawling directories,
+    This project gas 2 projects within it:
+
+    1. `g0nnaL4ugh`: The first one has all the core functionalities as Crypto, Crawling directories,
 Snitching the generated password, etc; and it will be a console-only program 
-that performs the encryption. On the other hand, `LifeBuoy` is GUI-only project
+that performs the encryption.
+    2. `LifeBuoy`: On the other hand, this is GUI-only project
 that will receive the password (in Base64) as input and perform the decryption using the
 modules in the main project.
+
+    ![Cannot Run](images/LifeBuoy.png?raw=true)
+
+## Folder structure
 
 > To open the project you should load the first `g0nnaL4augh.sln`
 
@@ -29,6 +35,9 @@ modules in the main project.
     ├── g0nnaL4augh.sln               # Solution file you should open
     ├── README.md
     ├── /images                       # Images used in README.md
+    ├── /keys                         # Place where gen_rsa_keys.py script drops the keys (public and private)
+    ├── /scripts                      # Helpful scripts in python3
+    │   ├── gen_rsa_keys.py           # Script that generates a RSA (2048 bits) keys (this keys would be to asymmetric encrypt the password generated in the Snitch module)
     └── /g0nnaL4augh                  # Source code of main project
         ├── Program.cs                # Console encryption application main entry point
         ├── /Crypto                   # Crypto operations (Encrypt & Decrypt)
