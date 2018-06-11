@@ -141,4 +141,4 @@ Then append the `unset` statement just under the `shebang`.
 
 ## Bypass Window security
 
-We can sign the executable with some fake credentials using this tool: ((https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh)[https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh]).
+We can sign the executable with some fake credentials using this tool: ([https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh](https://github.com/HackerFantastic/Public/blob/master/tools/bypassavp.sh)).
