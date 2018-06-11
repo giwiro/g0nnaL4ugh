@@ -34,6 +34,7 @@ public partial class MainWindow
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.rescue = new global::Gtk.Button();
 		this.rescue.WidthRequest = 80;
+		this.rescue.HeightRequest = 37;
 		this.rescue.CanFocus = true;
 		this.rescue.ExtensionEvents = ((global::Gdk.ExtensionMode)(1));
 		this.rescue.Name = "rescue";
@@ -48,6 +49,7 @@ public partial class MainWindow
 		global::Gtk.Tooltips w2 = new Gtk.Tooltips();
 		w2.SetTip(this.entry2, "Paste the password in base64 format", "Paste the password in base64 format");
 		this.entry2.WidthRequest = 400;
+		this.entry2.HeightRequest = 37;
 		this.entry2.CanFocus = true;
 		this.entry2.Name = "entry2";
 		this.entry2.IsEditable = true;
@@ -67,11 +69,12 @@ public partial class MainWindow
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.progressbar1 = new global::Gtk.ProgressBar();
 		this.progressbar1.WidthRequest = 480;
+		this.progressbar1.HeightRequest = 15;
 		this.progressbar1.Name = "progressbar1";
 		this.fixed1.Add(this.progressbar1);
 		global::Gtk.Fixed.FixedChild w5 = ((global::Gtk.Fixed.FixedChild)(this.fixed1[this.progressbar1]));
 		w5.X = 10;
-		w5.Y = 223;
+		w5.Y = 212;
 		// Container child fixed1.Gtk.Fixed+FixedChild
 		this.wrong = new global::Gtk.Label();
 		this.wrong.Name = "wrong";

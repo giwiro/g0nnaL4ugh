@@ -4,7 +4,6 @@
     <images-root-path>..</images-root-path>
   </configuration>
   <import>
-    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/LifeBuoy.exe" internal="true" />
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="500 300">
@@ -25,6 +24,7 @@
           <widget class="Gtk.Button" id="rescue">
             <property name="MemberName">rescue</property>
             <property name="WidthRequest">80</property>
+            <property name="HeightRequest">37</property>
             <property name="CanFocus">True</property>
             <property name="ExtensionEvents">All</property>
             <property name="Type">TextOnly</property>
@@ -41,6 +41,7 @@
           <widget class="Gtk.Entry" id="entry2">
             <property name="MemberName" />
             <property name="WidthRequest">400</property>
+            <property name="HeightRequest">37</property>
             <property name="Tooltip" translatable="yes">Paste the password in base64 format</property>
             <property name="CanFocus">True</property>
             <property name="IsEditable">True</property>
@@ -65,10 +66,11 @@
           <widget class="Gtk.ProgressBar" id="progressbar1">
             <property name="MemberName">10</property>
             <property name="WidthRequest">480</property>
+            <property name="HeightRequest">15</property>
           </widget>
           <packing>
             <property name="X">10</property>
-            <property name="Y">223</property>
+            <property name="Y">212</property>
           </packing>
         </child>
         <child>

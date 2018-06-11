@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using g0nnaL4ugh;
 using g0nnaL4ugh.Crypto;
 using Gtk;
@@ -7,11 +8,13 @@ public partial class MainWindow : Gtk.Window
 {
     private bool isProcessing = false;
     private PathUtil pathUtil;
+	private Timer myTimer;
 
     public MainWindow() : base(Gtk.WindowType.Toplevel)
     {
         Build();
-        progressbar1.Visible = false;
+		progressbar1.Visible = false;
+		progressbar1.Adjustment.Value = 0;      
         wrong.Visible = false;
         pathUtil = new PathUtil();
     }
@@ -54,9 +57,8 @@ public partial class MainWindow : Gtk.Window
         rescue.Sensitive = false;
         entry2.Sensitive = false;
         progressbar1.Visible = true;
-        this.BeginProgressAnimation();
         this.isProcessing = true;
-
+		this.BeginProgressAnimation();
         Spider spider;
         Decrypter decrypter = new Decrypter();
         byte[] pwd = Convert.FromBase64String(entry2.Text);
@@ -64,6 +66,7 @@ public partial class MainWindow : Gtk.Window
         spider = new Spider(this.pathUtil, decrypter, pwd);
         spider.Spread();
         Console.WriteLine("Finished");
+		this.StopProgressAnimation();
         MessageDialog messageDialog =
         new MessageDialog(this, DialogFlags.Modal, MessageType.Info,
         ButtonsType.Close, "Finished decrypting :D");
@@ -73,7 +76,27 @@ public partial class MainWindow : Gtk.Window
         Application.Quit();      
     }
 
-    private void BeginProgressAnimation()
+	private void ProgressAnimationEvent(object source, ElapsedEventArgs e)
     {
+        var value = (progressbar1.Adjustment.Value + 5) % 105;
+        progressbar1.Adjustment.Value = value;
     }
+    
+	private void BeginProgressAnimation()
+    {
+		myTimer = new Timer();
+		myTimer.Elapsed += new ElapsedEventHandler(ProgressAnimationEvent);
+        myTimer.Interval = 250;
+        myTimer.Start();
+    }
+
+	private void StopProgressAnimation()
+	{
+		if (myTimer != null)
+		{
+			myTimer.Stop();
+            progressbar1.Adjustment.Value = 0;
+            progressbar1.Sensitive = false;	
+		}      
+	}
 }
